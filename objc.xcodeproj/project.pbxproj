@@ -221,6 +221,7 @@
 			isa = PBXGroup;
 			children = (
 				BC8B5D1212D3D48100C78A5B /* libauto.dylib */,
+				37340C821F27911800CD43A0 /* include */,
 				838485C60D6D687700CEA253 /* Public Headers */,
 				838485C70D6D688200CEA253 /* Private Headers */,
 				8384862A0D6D6ABC00CEA253 /* Project Headers */,
@@ -293,6 +294,13 @@
 				D2AAC0630554660B00DB518D /* libobjc.A.dylib */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		37340C821F27911800CD43A0 /* include */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = include;
 			sourceTree = "<group>";
 		};
 		838485B20D6D67F900CEA253 /* Other */ = {
@@ -591,6 +599,7 @@
 					"$(CONFIGURATION_BUILD_DIR)/usr/include/**",
 					"$(CONFIGURATION_BUILD_DIR)/usr/local/include/**",
 					/System/Library/Frameworks/System.framework/PrivateHeaders,
+					"$(SRCROOT)/include",
 				);
 				INSTALL_PATH = /usr/lib;
 				ORDER_FILE = "$(SDKROOT)/AppleInternal/OrderFiles/libobjc.order";
@@ -644,6 +653,7 @@
 					"$(CONFIGURATION_BUILD_DIR)/usr/include/**",
 					"$(CONFIGURATION_BUILD_DIR)/usr/local/include/**",
 					/System/Library/Frameworks/System.framework/PrivateHeaders,
+					"$(SRCROOT)/include",
 				);
 				INSTALL_PATH = /usr/lib;
 				ORDER_FILE = "$(SDKROOT)/AppleInternal/OrderFiles/libobjc.order";
