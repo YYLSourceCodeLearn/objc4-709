@@ -10,9 +10,7 @@
 
 #import "objc.h"
 #import "runtime.h"
-
-
-#import "Person.h"
+ 
 #import "TestObject.h"
 
 int main(int argc, const char * argv[]) {
