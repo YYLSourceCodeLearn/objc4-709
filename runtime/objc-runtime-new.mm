@@ -679,6 +679,8 @@ attachCategories(Class cls, category_list *cats, bool flush_caches)
 * Attaches any outstanding categories.
 * Locking: runtimeLock must be held by the caller
 **********************************************************************/
+
+//通过 attachLists（）方法把 ro 中的内容拷贝到 rw 中。最后通过 attachCategories()方法把分类中的内容也添加进去
 static void methodizeClass(Class cls)
 {
     runtimeLock.assertWriting();
@@ -4589,6 +4591,8 @@ IMP _class_lookupMethodAndLoadCache3(id obj, SEL sel, Class cls)
 *   must be converted to _objc_msgForward or _objc_msgForward_stret.
 *   If you don't want forwarding at all, use lookUpImpOrNil() instead.
 **********************************************************************/
+
+//查找实现或者转发
 IMP lookUpImpOrForward(Class cls, SEL sel, id inst, 
                        bool initialize, bool cache, bool resolver)
 {
@@ -4614,6 +4618,7 @@ IMP lookUpImpOrForward(Class cls, SEL sel, id inst,
 
     runtimeLock.read();
 
+    //初始化相关工作
     if (!cls->isRealized()) {
         // Drop the read-lock and acquire the write-lock.
         // realizeClass() checks isRealized() again to prevent
@@ -4638,6 +4643,7 @@ IMP lookUpImpOrForward(Class cls, SEL sel, id inst,
     }
 
     
+    //加锁这一部分是有一行简单的代码，其主要的目的是保证方法的查找以及缓存的填充（cache-fill）的原子性，保证在运行一下代码时不会有新方法添加导致缓存被冲洗（flush）
  retry:    
     runtimeLock.assertReading();
 
