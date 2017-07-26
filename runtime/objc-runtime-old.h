@@ -180,7 +180,10 @@ struct old_property_list {
 };
 
 
+// objc_class 继承 objc_object
+// class 中存放的是描述对象的相关信息
 struct objc_class : objc_object {
+    
     Class superclass;
     const char *name;
     uint32_t version;

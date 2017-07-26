@@ -798,6 +798,9 @@ class protocol_array_t :
 };
 
 
+//class_rw_t class_ro_t比较： rw 应该是指 readwrite, ro 是指 readonly
+// 可读可取的结构体中存放了一个只读的结构体，而且这两个结构体很相似
+// 猜测：class_ro_t存放在编译期就确定得信息 class_rw_t：存放在运行期添加的信息
 struct class_rw_t {
     // Be warned that Symbolication knows the layout of this structure.
     uint32_t flags;
@@ -1061,10 +1064,18 @@ public:
 };
 
 
+// objc_class 继承 objc_object
+// class 中存放的是描述对象的相关信息
 struct objc_class : objc_object {
     // Class ISA;
+    
+    //父类的指针
     Class superclass;
+    // 一个缓存，官方文档注释写明了缓存指针和虚表
     cache_t cache;             // formerly cache pointer and vtable
+    
+    // 实际就是 class_rw_t * 加上自定义的 rr/alloc 标志
+    // rr/alloc 标志是指含有这些方法：retain/release/autorelease/retainCount/alloc等
     class_data_bits_t bits;    // class_rw_t * plus custom rr/alloc flags
 
     class_rw_t *data() { 

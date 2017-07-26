@@ -31,6 +31,7 @@
 
 #include <TargetConditionals.h>
 #include "objc-config.h"
+#include <pthread/tsd_private.h>
 
 #ifdef __LP64__
 #   define WORD_SHIFT 3UL
@@ -106,6 +107,7 @@ class nocopy_t {
 #   include <libkern/OSCacheControl.h>
 #   include <System/pthread_machdep.h>
 #   include "objc-probes.h"  // generated dtrace probe definitions.
+#include <os/lock.h>
 
 // Some libc functions call objc_msgSend() 
 // so we can't use them without deadlocks.
@@ -774,6 +776,8 @@ static inline mach_port_t mach_thread_self_direct()
         _pthread_getspecific_direct(_PTHREAD_TSD_SLOT_MACH_THREAD_SELF);
 }
 
+#include <pthread/qos_private.h>
+
 #if SUPPORT_QOS_HACK
 static inline pthread_priority_t pthread_self_priority_direct() 
 {
@@ -801,42 +805,89 @@ using recursive_mutex_t = recursive_mutex_tt<DEBUG>;
 struct fork_unsafe_lock_t { };
 extern const fork_unsafe_lock_t fork_unsafe_lock;
 
+#include <os/lock.h>
 #include "objc-lockdebug.h"
 
 template <bool Debug>
 class mutex_tt : nocopy_t {
     os_unfair_lock mLock;
- public:
+// public:
+//    mutex_tt() : mLock(OS_UNFAIR_LOCK_INIT) {
+//        lockdebug_remember_mutex(this);
+//    }
+//
+//    mutex_tt(const fork_unsafe_lock_t unsafe) : mLock(OS_UNFAIR_LOCK_INIT) { }
+//
+//    void lock() {
+//        lockdebug_mutex_lock(this);
+//
+//        os_unfair_lock_lock_with_options_inline
+//            (&mLock, OS_UNFAIR_LOCK_DATA_SYNCHRONIZATION);
+//    }
+//
+//    void unlock() {
+//        lockdebug_mutex_unlock(this);
+//
+//        os_unfair_lock_unlock_inline(&mLock);
+//    }
+//
+//    void forceReset() {
+//        lockdebug_mutex_unlock(this);
+//
+//        bzero(&mLock, sizeof(mLock));
+//        mLock = os_unfair_lock OS_UNFAIR_LOCK_INIT;
+//    }
+//
+//    void assertLocked() {
+//        lockdebug_mutex_assert_locked(this);
+//    }
+//
+//    void assertUnlocked() {
+//        lockdebug_mutex_assert_unlocked(this);
+//    }
+public:
     mutex_tt() : mLock(OS_UNFAIR_LOCK_INIT) {
-        lockdebug_remember_mutex(this);
+        //lockdebug_remember_mutex(this);
     }
-
+    
     mutex_tt(const fork_unsafe_lock_t unsafe) : mLock(OS_UNFAIR_LOCK_INIT) { }
-
+    
+//    void lock() {
+//        lockdebug_mutex_lock(this);
+//        
+//        os_unfair_lock_lock_with_options_inline
+//        (&mLock, OS_UNFAIR_LOCK_DATA_SYNCHRONIZATION);
+//    }
+//    
+//    void unlock() {
+//        lockdebug_mutex_unlock(this);
+//        
+//        os_unfair_lock_unlock_inline(&mLock);
+//    }
+    
     void lock() {
         lockdebug_mutex_lock(this);
 
-        os_unfair_lock_lock_with_options_inline
-            (&mLock, OS_UNFAIR_LOCK_DATA_SYNCHRONIZATION);
+        os_unfair_lock_lock(&mLock);
     }
 
     void unlock() {
         lockdebug_mutex_unlock(this);
 
-        os_unfair_lock_unlock_inline(&mLock);
+        os_unfair_lock_unlock(&mLock);
     }
 
     void forceReset() {
         lockdebug_mutex_unlock(this);
-
+        
         bzero(&mLock, sizeof(mLock));
         mLock = os_unfair_lock OS_UNFAIR_LOCK_INIT;
     }
-
+    
     void assertLocked() {
         lockdebug_mutex_assert_locked(this);
     }
-
+    
     void assertUnlocked() {
         lockdebug_mutex_assert_unlocked(this);
     }

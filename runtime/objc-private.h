@@ -65,6 +65,10 @@ namespace {
 #endif
 
 
+// 联合体
+// x86_64 与 arm64 的区别只在于部分字段的位数不同，字段是完全相同的
+// 对64位的设备对象进行类对象指针的优化，利用合理的 bit (arm64设备为32位) 存储类对象的地址， 其它位用来进行内存管理。 这种优化模式被称为 tagged pointer。 用在 isa_t 的实现中称为 Indexedisa
+// 在64位系统中，为了降低内存使用，提升性能，isa 中有一部分字段用来存储其它信息（这也解释了 isa_t 结构体里面的其它字段）
 union isa_t 
 {
     isa_t() { }
@@ -110,14 +114,14 @@ union isa_t
 #   define ISA_MAGIC_VALUE 0x001d800000000001ULL
     struct {
         uintptr_t nonpointer        : 1;
-        uintptr_t has_assoc         : 1;
-        uintptr_t has_cxx_dtor      : 1;
-        uintptr_t shiftcls          : 44; // MACH_VM_MAX_ADDRESS 0x7fffffe00000
-        uintptr_t magic             : 6;
-        uintptr_t weakly_referenced : 1;
-        uintptr_t deallocating      : 1;
-        uintptr_t has_sidetable_rc  : 1;
-        uintptr_t extra_rc          : 8;
+        uintptr_t has_assoc         : 1;  // 是否有关联对象， 如果没有是否快速释放内存
+        uintptr_t has_cxx_dtor      : 1;  // 是否有析构器
+        uintptr_t shiftcls          : 44; // MACH_VM_MAX_ADDRESS 0x7fffffe00000 类对象指针
+        uintptr_t magic             : 6;  // 标记初始化完成
+        uintptr_t weakly_referenced : 1;  // 对象是否曾经或正在被弱引用，如果没有，可以快速释放内存
+        uintptr_t deallocating      : 1;  // 对象是否正在释放
+        uintptr_t has_sidetable_rc  : 1;  // 对象的引用计数太大，无法存储
+        uintptr_t extra_rc          : 8;  // 引用计数（但是比 retaincount 小1）
 #       define RC_ONE   (1ULL<<56)
 #       define RC_HALF  (1ULL<<7)
     };
@@ -165,16 +169,23 @@ union isa_t
 };
 
 
+// C++结构体， 有权限控制， 有成员函数
 struct objc_object {
+    // class 对象中存储的是描述对象的相关信息， class中的 isa 指向 meta class, meta class 中存放的就是描述 class 相关信息
+    // meta class 的 isa 指向了 root meta class (绝大多数情况下 root class 就是 NSObject), root meta class 的 isa 指向自身
+    // 通过对象调用的方法（实例方法）都是存储在 class 中
+    // 通过类名来调用的方法（类方法）都是存储在 meta class 中
 private:
     isa_t isa;
 
 public:
 
     // ISA() assumes this is NOT a tagged pointer object
+    // 不支持 tagged pointer 时候获取 Class 的函数
     Class ISA();
 
     // getIsa() allows this to be a tagged pointer object
+    // 支持 tagged pointer 时候获取 Class 的函数
     Class getIsa();
 
     // initIsa() should be used to init the isa of new objects only.
@@ -183,6 +194,8 @@ public:
     // initClassIsa(): class objects
     // initProtocolIsa(): protocol objects
     // initIsa(): other objects
+    
+    //下面几个函数 最终调用的都是 initIsa 函数
     void initIsa(Class cls /*nonpointer=false*/);
     void initClassIsa(Class cls /*nonpointer=maybe*/);
     void initProtocolIsa(Class cls /*nonpointer=maybe*/);
@@ -190,9 +203,13 @@ public:
 
     // changeIsa() should be used to change the isa of existing objects.
     // If this is a new object, use initIsa() for performance.
+    //改变一个对象的 Class
+    // KVO 的实现中，会改变一个对象的 Class, 以后会带来验证
     Class changeIsa(Class newCls);
 
     bool hasNonpointerIsa();
+    // 判断当前对象指针是否启用了 tagged pointer
+    // NSNumber, NSDate 等值占用内存较少的对象启用了 tagged pointer
     bool isTaggedPointer();
     bool isBasicTaggedPointer();
     bool isExtTaggedPointer();
@@ -209,6 +226,7 @@ public:
     // object may have -.cxx_destruct implementation?
     bool hasCxxDtor();
 
+    // 下面是一系列管理引用计数和生命周期的函数
     // Optimized calls to retain/release methods
     id retain();
     void release();
