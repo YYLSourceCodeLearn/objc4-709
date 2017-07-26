@@ -1711,6 +1711,8 @@ static void reconcileInstanceVariables(Class cls, Class supercls, const class_ro
 * Returns the real class structure for the class. 
 * Locking: runtimeLock must be write-locked by the caller
 **********************************************************************/
+
+// 某个类的 realizeClass 方法是在类被首次调用的时候才会调用
 static Class realizeClass(Class cls)
 {
     runtimeLock.assertWriting();
@@ -1736,8 +1738,10 @@ static Class realizeClass(Class cls)
     } else {
         // Normal class. Allocate writeable class data.
         rw = (class_rw_t *)calloc(sizeof(class_rw_t), 1);
+        //把 ro 赋值给 rw 中的 ro 字段
         rw->ro = ro;
         rw->flags = RW_REALIZED|RW_REALIZING;
+        // 最后把 rw 赋值回去，这一步完成之后 rw 和 ro 就被正确的设置了，但 rw 中的方法，属性，协议列表还是空的
         cls->setData(rw);
     }
 
@@ -1823,6 +1827,7 @@ static Class realizeClass(Class cls)
         addRootClass(cls);
     }
 
+    // 这一步会把 ro 中的方法，属性，协议拷贝到 rw 中，另外会把此类所有的 category中附加的方法，属性，协议也拷贝进去。oc 之所以能在运行时做各种事情，其实就是基于 runtime 的这些支持
     // Attach categories
     methodizeClass(cls);
 

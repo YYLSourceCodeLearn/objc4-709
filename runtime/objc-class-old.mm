@@ -2285,7 +2285,7 @@ objc_constructInstance(Class cls, void *bytes)
     if (!cls  ||  !bytes) return nil;
 
     id obj = (id)bytes;
-
+    //初始化对象的 isa 指针
     obj->initIsa(cls);
 
     if (cls->hasCxxCtor()) {
@@ -2302,6 +2302,8 @@ objc_constructInstance(Class cls, void *bytes)
 * variables, in the specified zone.  The isa field is set to the
 * class, C++ default constructors are called, and all other fields are zeroed.
 **********************************************************************/
+
+// runtime 主要做了一些内存对齐的一些计算
 id 
 _class_createInstanceFromZone(Class cls, size_t extraBytes, void *zone)
 {
@@ -2317,9 +2319,11 @@ _class_createInstanceFromZone(Class cls, size_t extraBytes, void *zone)
     // CF requires all objects be at least 16 bytes.
     if (size < 16) size = 16;
 
+    //申请内存
     if (zone) {
         bytes = malloc_zone_calloc((malloc_zone_t *)zone, 1, size);
     } else {
+        //calloc 与 malloc 的区别： calloc 一次可以申请 n*size 字节大小的内存，并且申请后自动置零
         bytes = calloc(1, size);
     }
 

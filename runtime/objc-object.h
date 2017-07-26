@@ -751,6 +751,7 @@ objc_object::hasNonpointerIsa()
 inline void 
 objc_object::initIsa(Class cls)
 {
+    // 把对象的 isa 指针指向这个类的元信息 Class
     assert(!isTaggedPointer()); 
     isa = (uintptr_t)cls; 
 }
@@ -875,8 +876,10 @@ objc_object::rootDealloc()
 inline id 
 objc_object::retain()
 {
+    //如果支持 tagged pointer 就会直接断言掉
     assert(!isTaggedPointer());
 
+    //如果没有 custom 的 retain/release 方法
     if (fastpath(!ISA()->hasCustomRR())) {
         return sidetable_retain();
     }
