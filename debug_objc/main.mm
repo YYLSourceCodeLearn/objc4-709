@@ -10,15 +10,12 @@
 
 #import "objc.h"
 #import "runtime.h"
-
-
-#import "Person.h"
+ 
 #import "TestObject.h"
 
 int main(int argc, const char * argv[]) {
     @autoreleasepool {
         
-        [NSObject new]
       
         TestObject *testObj = [[TestObject alloc] init];
         testObj.name = @"张三";

@@ -22,7 +22,6 @@
 
 /* Begin PBXBuildFile section */
 		3722E37E1F28266C0014C347 /* README.md in Sources */ = {isa = PBXBuildFile; fileRef = 3722E37D1F28266C0014C347 /* README.md */; };
-		3722E4371F2844A50014C347 /* main.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3722E4361F2844A50014C347 /* main.mm */; };
 		3722E43B1F2844E30014C347 /* libobjc.A.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = D2AAC0630554660B00DB518D /* libobjc.A.dylib */; settings = {ATTRIBUTES = (Required, ); }; };
 		3722E4881F2851D20014C347 /* _simple.h in Headers */ = {isa = PBXBuildFile; fileRef = 3722E46C1F2851D20014C347 /* _simple.h */; };
 		3722E4891F2851D20014C347 /* Block_private.h in Headers */ = {isa = PBXBuildFile; fileRef = 3722E46D1F2851D20014C347 /* Block_private.h */; };
@@ -43,8 +42,8 @@
 		3722E4991F2851D20014C347 /* ExportMacros.h in Headers */ = {isa = PBXBuildFile; fileRef = 3722E4851F2851D20014C347 /* ExportMacros.h */; };
 		3722E49A1F2851D20014C347 /* FastMalloc.h in Headers */ = {isa = PBXBuildFile; fileRef = 3722E4861F2851D20014C347 /* FastMalloc.h */; };
 		3722E49B1F2851D20014C347 /* Platform.h in Headers */ = {isa = PBXBuildFile; fileRef = 3722E4871F2851D20014C347 /* Platform.h */; };
-		3722E49E1F2855DA0014C347 /* Person.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3722E49D1F2855DA0014C347 /* Person.mm */; };
-		377B54B01F28914300170510 /* TestObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 377B54AF1F28914300170510 /* TestObject.m */; };
+		37F3E7F21F28E44A005E0F2E /* main.mm in Sources */ = {isa = PBXBuildFile; fileRef = 37F3E7ED1F28E44A005E0F2E /* main.mm */; };
+		37F3E7F41F28E44A005E0F2E /* TestObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 37F3E7F11F28E44A005E0F2E /* TestObject.m */; };
 		393CEAC00DC69E3E000B69DE /* objc-references.mm in Sources */ = {isa = PBXBuildFile; fileRef = 393CEABF0DC69E3E000B69DE /* objc-references.mm */; };
 		393CEAC60DC69E67000B69DE /* objc-references.h in Headers */ = {isa = PBXBuildFile; fileRef = 393CEAC50DC69E67000B69DE /* objc-references.h */; };
 		39ABD72312F0B61800D1054C /* objc-weak.h in Headers */ = {isa = PBXBuildFile; fileRef = 39ABD71F12F0B61800D1054C /* objc-weak.h */; };
@@ -161,7 +160,6 @@
 /* Begin PBXFileReference section */
 		3722E37D1F28266C0014C347 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		3722E4341F2844A50014C347 /* debug_objc */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = debug_objc; sourceTree = BUILT_PRODUCTS_DIR; };
-		3722E4361F2844A50014C347 /* main.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = main.mm; sourceTree = "<group>"; };
 		3722E46C1F2851D20014C347 /* _simple.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = _simple.h; sourceTree = "<group>"; };
 		3722E46D1F2851D20014C347 /* Block_private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Block_private.h; sourceTree = "<group>"; };
 		3722E46F1F2851D20014C347 /* CrashReporterClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CrashReporterClient.h; sourceTree = "<group>"; };
@@ -181,11 +179,10 @@
 		3722E4851F2851D20014C347 /* ExportMacros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExportMacros.h; sourceTree = "<group>"; };
 		3722E4861F2851D20014C347 /* FastMalloc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FastMalloc.h; sourceTree = "<group>"; };
 		3722E4871F2851D20014C347 /* Platform.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Platform.h; sourceTree = "<group>"; };
-		3722E49C1F2855DA0014C347 /* Person.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Person.h; sourceTree = "<group>"; };
-		3722E49D1F2855DA0014C347 /* Person.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = Person.mm; sourceTree = "<group>"; };
-		377B54AE1F28914300170510 /* TestObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestObject.h; sourceTree = "<group>"; };
-		377B54AF1F28914300170510 /* TestObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestObject.m; sourceTree = "<group>"; };
 		377B54B31F2897E000170510 /* objc-object.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "objc-object.h"; path = "runtime/objc-object.h"; sourceTree = "<group>"; };
+		37F3E7ED1F28E44A005E0F2E /* main.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = main.mm; sourceTree = "<group>"; };
+		37F3E7F01F28E44A005E0F2E /* TestObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestObject.h; sourceTree = "<group>"; };
+		37F3E7F11F28E44A005E0F2E /* TestObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestObject.m; sourceTree = "<group>"; };
 		393CEABF0DC69E3E000B69DE /* objc-references.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = "objc-references.mm"; path = "runtime/objc-references.mm"; sourceTree = "<group>"; };
 		393CEAC50DC69E67000B69DE /* objc-references.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "objc-references.h"; path = "runtime/objc-references.h"; sourceTree = "<group>"; };
 		39ABD71F12F0B61800D1054C /* objc-weak.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "objc-weak.h"; path = "runtime/objc-weak.h"; sourceTree = "<group>"; };
@@ -299,8 +296,8 @@
 			isa = PBXGroup;
 			children = (
 				BC8B5D1212D3D48100C78A5B /* libauto.dylib */,
-				3722E37D1F28266C0014C347 /* README.md */,
-				3722E46B1F2851D20014C347 /* include */,
+				37F3E7EC1F28E449005E0F2E /* debug_objc */,
+				37340C821F27911800CD43A0 /* include */,
 				838485C60D6D687700CEA253 /* Public Headers */,
 				838485C70D6D688200CEA253 /* Private Headers */,
 				8384862A0D6D6ABC00CEA253 /* Project Headers */,
@@ -308,7 +305,6 @@
 				838486270D6D690F00CEA253 /* Obsolete Source */,
 				08FB7795FE84155DC02AAC07 /* Source */,
 				838485B20D6D67F900CEA253 /* Other */,
-				3722E4351F2844A50014C347 /* debug_objc */,
 				1AB674ADFE9D54B511CA2CBB /* Products */,
 			);
 			name = objc;
@@ -377,106 +373,21 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		3722E4351F2844A50014C347 /* debug_objc */ = {
+		37340C821F27911800CD43A0 /* include */ = {
 			isa = PBXGroup;
 			children = (
-				3722E4361F2844A50014C347 /* main.mm */,
-				3722E49C1F2855DA0014C347 /* Person.h */,
-				3722E49D1F2855DA0014C347 /* Person.mm */,
-				377B54AE1F28914300170510 /* TestObject.h */,
-				377B54AF1F28914300170510 /* TestObject.m */,
-			);
-			path = debug_objc;
-			sourceTree = "<group>";
-		};
-		3722E46B1F2851D20014C347 /* include */ = {
-			isa = PBXGroup;
-			children = (
-				3722E46C1F2851D20014C347 /* _simple.h */,
-				3722E46D1F2851D20014C347 /* Block_private.h */,
-				3722E46E1F2851D20014C347 /* config */,
-				3722E46F1F2851D20014C347 /* CrashReporterClient.h */,
-				3722E4701F2851D20014C347 /* mach-o */,
-				3722E4731F2851D20014C347 /* objc-shared-cache.h */,
-				3722E4741F2851D20014C347 /* os */,
-				3722E4781F2851D20014C347 /* pthread */,
-				3722E47D1F2851D20014C347 /* sys */,
-				3722E4801F2851D20014C347 /* System */,
-				3722E4841F2851D20014C347 /* wtf */,
 			);
 			path = include;
 			sourceTree = "<group>";
 		};
-		3722E46E1F2851D20014C347 /* config */ = {
+		37F3E7EC1F28E449005E0F2E /* debug_objc */ = {
 			isa = PBXGroup;
 			children = (
+				37F3E7ED1F28E44A005E0F2E /* main.mm */,
+				37F3E7F01F28E44A005E0F2E /* TestObject.h */,
+				37F3E7F11F28E44A005E0F2E /* TestObject.m */,
 			);
-			path = config;
-			sourceTree = "<group>";
-		};
-		3722E4701F2851D20014C347 /* mach-o */ = {
-			isa = PBXGroup;
-			children = (
-				3722E4711F2851D20014C347 /* dyld_priv.h */,
-			);
-			path = "mach-o";
-			sourceTree = "<group>";
-		};
-		3722E4741F2851D20014C347 /* os */ = {
-			isa = PBXGroup;
-			children = (
-				3722E4751F2851D20014C347 /* base_private.h */,
-				3722E4761F2851D20014C347 /* lock_private.h */,
-				3722E4771F2851D20014C347 /* tsd.h */,
-			);
-			path = os;
-			sourceTree = "<group>";
-		};
-		3722E4781F2851D20014C347 /* pthread */ = {
-			isa = PBXGroup;
-			children = (
-				3722E4791F2851D20014C347 /* qos_private.h */,
-				3722E47A1F2851D20014C347 /* spinlock_private.h */,
-				3722E47B1F2851D20014C347 /* tsd_private.h */,
-				3722E47C1F2851D20014C347 /* workqueue_private.h */,
-			);
-			path = pthread;
-			sourceTree = "<group>";
-		};
-		3722E47D1F2851D20014C347 /* sys */ = {
-			isa = PBXGroup;
-			children = (
-				3722E47E1F2851D20014C347 /* qos_private.h */,
-				3722E47F1F2851D20014C347 /* reason.h */,
-			);
-			path = sys;
-			sourceTree = "<group>";
-		};
-		3722E4801F2851D20014C347 /* System */ = {
-			isa = PBXGroup;
-			children = (
-				3722E4811F2851D20014C347 /* machine */,
-				3722E4831F2851D20014C347 /* pthread_machdep.h */,
-			);
-			path = System;
-			sourceTree = "<group>";
-		};
-		3722E4811F2851D20014C347 /* machine */ = {
-			isa = PBXGroup;
-			children = (
-				3722E4821F2851D20014C347 /* cpu_capabilities.h */,
-			);
-			path = machine;
-			sourceTree = "<group>";
-		};
-		3722E4841F2851D20014C347 /* wtf */ = {
-			isa = PBXGroup;
-			children = (
-				3722E4851F2851D20014C347 /* ExportMacros.h */,
-				3722E4861F2851D20014C347 /* FastMalloc.h */,
-				3722E4871F2851D20014C347 /* Platform.h */,
-			);
-			path = wtf;
+			path = debug_objc;
 			sourceTree = "<group>";
 		};
 		838485B20D6D67F900CEA253 /* Other */ = {
@@ -739,9 +650,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3722E49E1F2855DA0014C347 /* Person.mm in Sources */,
-				377B54B01F28914300170510 /* TestObject.m in Sources */,
-				3722E4371F2844A50014C347 /* main.mm in Sources */,
+				37F3E7F21F28E44A005E0F2E /* main.mm in Sources */,
+				37F3E7F41F28E44A005E0F2E /* TestObject.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
