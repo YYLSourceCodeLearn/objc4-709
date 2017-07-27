@@ -192,8 +192,11 @@ using namespace objc_references_support;
 
 spinlock_t AssociationsManagerLock;
 
+// 管理所有的关联对象
 class AssociationsManager {
     // associative references: object pointer -> PtrPtrHashMap.
+    
+    //存储所有关联的对象， 把所有对象的关联对象都存储在一个全局的 map 里面。而 map 的key 是这个对象的指针地址（任意两个不同对象的指针地址一定是不同的）， 这个 map 的 value又是另外一个 AssociationsHashMap 里面保存了关联对象的 kv 对。
     static AssociationsHashMap *_map;
 public:
     AssociationsManager()   { AssociationsManagerLock.lock(); }

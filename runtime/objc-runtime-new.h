@@ -278,19 +278,31 @@ typedef uintptr_t protocol_ref_t;  // protocol_t *, but unremapped
 
 #define PROTOCOL_FIXED_UP_MASK (PROTOCOL_FIXED_UP_1 | PROTOCOL_FIXED_UP_2)
 
+//protocol 本质上也是一个对象
 struct protocol_t : objc_object {
+    
+    //区别重载时的函数
     const char *mangledName;
+    
+    //此协议遵循的协议
     struct protocol_list_t *protocols;
+    
+    //对应的是实例方法
     method_list_t *instanceMethods;
+    //对应的是类方法
     method_list_t *classMethods;
+    //可选实例方法，可选就是写在 @optional 之后的方法
     method_list_t *optionalInstanceMethods;
+    //可选类方法
     method_list_t *optionalClassMethods;
+    //实例属性
     property_list_t *instanceProperties;
     uint32_t size;   // sizeof(protocol_t)
     uint32_t flags;
     // Fields below this point are not always present on disk.
     const char **_extendedMethodTypes;
     const char *_demangledName;
+    //类属性
     property_list_t *_classProperties;
 
     const char *demangledName();
@@ -1334,12 +1346,20 @@ struct swift_class_t : objc_class {
 };
 
 
+//category可以添加实例方法、类方法、甚至可以实现协议、添加属性
+//category无法添加实例变量
 struct category_t {
+    //类的名字
     const char *name;
+    //类
     classref_t cls;
+    //category 中所有给类添加实例方法的列表
     struct method_list_t *instanceMethods;
+    //category 中所有添加的类方法列表
     struct method_list_t *classMethods;
+    //实现的所有协议列表
     struct protocol_list_t *protocols;
+    //添加的所有属性
     struct property_list_t *instanceProperties;
     // Fields below this point are not always present on disk.
     struct property_list_t *_classProperties;

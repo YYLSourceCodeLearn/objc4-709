@@ -868,6 +868,7 @@ inline void
 objc_object::rootDealloc()
 {
     if (isTaggedPointer()) return;
+    //慢速释放
     object_dispose((id)this);
 }
 
