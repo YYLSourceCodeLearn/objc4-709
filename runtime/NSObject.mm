@@ -687,13 +687,17 @@ class AutoreleasePoolPage
 #endif
     static size_t const COUNT = SIZE / sizeof(id);
 
-    magic_t const magic;
-    id *next;
-    pthread_t const thread;
-    AutoreleasePoolPage * const parent;
-    AutoreleasePoolPage *child;
-    uint32_t const depth;
-    uint32_t hiwat;
+    magic_t const magic;                     //16字节
+    id *next;                                //8字节
+    pthread_t const thread;                  //8字节
+    
+    //这两个字段说明 pool 并不是一个栈结构，而是一个双向链表
+    AutoreleasePoolPage * const parent;      //8字节
+    AutoreleasePoolPage *child;              //8字节
+    
+    
+    uint32_t const depth;                    //4字节
+    uint32_t hiwat;                          //4字节
 
     // SIZE-sizeof(*this) bytes of contents follow
 
@@ -719,10 +723,12 @@ class AutoreleasePoolPage
     }
 
     AutoreleasePoolPage(AutoreleasePoolPage *newParent) 
-        : magic(), next(begin()), thread(pthread_self()),
+        : magic(), //用作校验
+    next(begin()), //通过 begin() 方法初始化
+    thread(pthread_self()),  //当前 pool 所处的线程
           parent(newParent), child(nil), 
-          depth(parent ? 1+parent->depth : 0), 
-          hiwat(parent ? parent->hiwat : 0)
+          depth(parent ? 1+parent->depth : 0),  //page 的深度，首次为0， 以后每次初始化都加1
+          hiwat(parent ? parent->hiwat : 0) //用来计算 pool 最多存放的对象个数，在每次执行 pop()的时候，会更新一下这个字段
     { 
         if (parent) {
             parent->check();
@@ -780,6 +786,7 @@ class AutoreleasePoolPage
     }
 
 
+    //返回当前空闲位置的初始位置， 即可以用来存放对象地址的第一个位置，即56个字节之后开始的地方
     id * begin() {
         return (id *) ((uint8_t *)this+sizeof(*this));
     }

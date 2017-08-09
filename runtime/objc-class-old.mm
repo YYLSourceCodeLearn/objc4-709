@@ -2314,6 +2314,7 @@ _class_createInstanceFromZone(Class cls, size_t extraBytes, void *zone)
     if (!cls) return nil;
 
     // Allocate and initialize
+    // 获取对象的大小，对象大小最小为16
     size = cls->alignedInstanceSize() + extraBytes;
 
     // CF requires all objects be at least 16 bytes.

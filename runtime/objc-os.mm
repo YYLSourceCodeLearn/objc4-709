@@ -829,6 +829,8 @@ void _objc_atfork_child()
 * Called by libSystem BEFORE library initialization time
 **********************************************************************/
 
+// OC 运行时的入口方法
+
 void _objc_init(void)
 {
     static bool initialized = false;
@@ -842,6 +844,7 @@ void _objc_init(void)
     lock_init();
     exception_init();
 
+    //category 被附加到类上面是在 map_images 的时候发生的
     _dyld_objc_notify_register(&map_images, load_images, unmap_image);
 }
 

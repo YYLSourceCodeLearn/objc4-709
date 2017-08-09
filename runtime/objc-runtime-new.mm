@@ -377,6 +377,7 @@ static NXMapTable *unattachedCategories(void)
 * Records an unattached category.
 * Locking: runtimeLock must be held by the caller.
 **********************************************************************/
+//把类和 category 做一个关联映射
 static void addUnattachedCategoryForClass(category_t *cat, Class cls, 
                                           header_info *catHeader)
 {
@@ -755,6 +756,7 @@ static void methodizeClass(Class cls)
 * Updates method caches for cls and its subclasses.
 * Locking: runtimeLock must be held by the caller
 **********************************************************************/
+//处理 category 添加功能
 static void remethodizeClass(Class cls)
 {
     category_list *cats;
@@ -2555,8 +2557,11 @@ void _read_images(header_info **hList, uint32_t hCount, int totalClasses, int un
 
     ts.log("IMAGE TIMES: realize future classes");
 
+    //1. 把 category 的实例方法、协议以及属性添加到类上
+    //2. 把 category 的类方法和协议添加到类的 metaclass 上
     // Discover categories. 
     for (EACH_HEADER) {
+        // 编译器为我们准备的 category_t 数组
         category_t **catlist = 
             _getObjc2CategoryList(hi, &count);
         bool hasClassProperties = hi->info()->hasCategoryClassProperties();
@@ -3530,6 +3535,7 @@ protocol_copyPropertyList2(Protocol *proto, unsigned int *outCount,
 {
     if (!proto  ||  !isRequiredProperty) {
         // Optional properties are not currently supported.
+        
         if (outCount) *outCount = 0;
         return nil;
     }
@@ -6295,6 +6301,7 @@ object_copyFromZone(id oldObj, size_t extraBytes, void *zone)
 * Removes associative references.
 * Returns `obj`. Does nothing if `obj` is nil.
 **********************************************************************/
+// runtime 的销毁对象函数， 会判断这个对象有木有关联对象， 如果有会调用_object_remove_assocations做关联对象的清理工作。
 void *objc_destructInstance(id obj) 
 {
     if (obj) {
