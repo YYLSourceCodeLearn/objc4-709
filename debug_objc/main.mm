@@ -15,8 +15,7 @@
 
 int main(int argc, const char * argv[]) {
     @autoreleasepool {
-        
-      
+         
         TestObject *testObj = [[TestObject alloc] init];
         testObj.name = @"张三";
         
