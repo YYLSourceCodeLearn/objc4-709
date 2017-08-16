@@ -41,29 +41,41 @@
 #if !OBJC_TYPES_DEFINED
 
 /// An opaque type that represents a method in a class definition.
+//描述类中的一个方法
 typedef struct objc_method *Method;
 
 /// An opaque type that represents an instance variable.
+//实例变量
 typedef struct objc_ivar *Ivar;
 
 /// An opaque type that represents a category.
+//类别Category
 typedef struct objc_category *Category;
 
 /// An opaque type that represents an Objective-C declared property.
+//类中申明的属性
 typedef struct objc_property *objc_property_t;
 
 struct objc_class {
+    //指针, 表示是一个什么
+    //实例的isa指向类对象,类对象的isa指向元类
     Class isa  OBJC_ISA_AVAILABILITY;
 
 #if !__OBJC2__
+    //指向父类
     Class super_class                                        OBJC2_UNAVAILABLE;
+    //类名
     const char *name                                         OBJC2_UNAVAILABLE;
     long version                                             OBJC2_UNAVAILABLE;
     long info                                                OBJC2_UNAVAILABLE;
     long instance_size                                       OBJC2_UNAVAILABLE;
+    //成员变量列表
     struct objc_ivar_list *ivars                             OBJC2_UNAVAILABLE;
+    //方法列表
     struct objc_method_list **methodLists                    OBJC2_UNAVAILABLE;
+    //缓存
     struct objc_cache *cache                                 OBJC2_UNAVAILABLE;
+    //一种优化,调用过的方法存入缓存列表,下次调用先先找缓存
     struct objc_protocol_list *protocols                     OBJC2_UNAVAILABLE;
 #endif
 
