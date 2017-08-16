@@ -24,6 +24,7 @@ int main(int argc, const char * argv[]) {
         NSLog(@"%p", [NSObject class]);
         
         NSLog(@"%@", testObj.name);
+ 
     }
     return 0;
 }

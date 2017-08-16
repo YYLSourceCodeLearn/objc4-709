@@ -1774,6 +1774,8 @@ callAlloc(Class cls, bool checkNil, bool allocWithZone=false)
 {
     if (slowpath(checkNil && !cls)) return nil;
 
+    
+    
 #if __OBJC2__
     if (fastpath(!cls->ISA()->hasCustomAWZ())) {
         // No alloc/allocWithZone implementation. Go straight to the allocator.

@@ -64,6 +64,8 @@
 
 // Define SUPPORT_TAGGED_POINTERS=1 to enable tagged pointer objects
 // Be sure to edit tagged pointer SPI in objc-internal.h as well.
+
+//判断当前对象是否在使用 TaggedPointer 是否标志位是否为1
 #if !(__OBJC2__  &&  __LP64__)
 #   define SUPPORT_TAGGED_POINTERS 0
 #else
