@@ -116,6 +116,8 @@ struct weak_entry_t {
  * The global weak references table. Stores object ids as keys,
  * and weak_entry_t structs as their values.
  */
+//苹果使用一个全局的 weak 表保存所有的 weak 引用， 并将对象作为键， weak_entry_t 作为值，
+//weak_entry_t 中保存了所有指向该对象的 weak 指正
 struct weak_table_t {
     weak_entry_t *weak_entries;
     size_t    num_entries;

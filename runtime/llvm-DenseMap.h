@@ -572,6 +572,7 @@ public:
   }
 };
 
+//散列表来存储引用计数具体是用 DenseMap 类来实现，   这个类包含好多映射实例到其引用计数的键值对
 template<typename KeyT, typename ValueT,
          bool ZeroValuesArePurgeable = false, 
          typename KeyInfoT = DenseMapInfo<KeyT> >

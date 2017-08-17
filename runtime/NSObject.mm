@@ -140,9 +140,12 @@ typedef objc::DenseMap<DisguisedPtr<objc_object>,size_t,true> RefcountMap;
 enum HaveOld { DontHaveOld = false, DoHaveOld = true };
 enum HaveNew { DontHaveNew = false, DoHaveNew = true };
 
+//它用于管理引用计数表和 weak 表
 struct SideTable {
     spinlock_t slock;
     RefcountMap refcnts;
+    
+    //weak 表的作用是在对象执行 dealloc 的时候将所有指向该对象的 weak 指正的值设置为 nil, 避免悬空
     weak_table_t weak_table;
 
     SideTable() {
@@ -666,7 +669,14 @@ struct magic_t {
 
 #   undef M1
 };
-    
+
+/*
+ void *context = objc_autoreleasePoolPush();
+ objc_autoreleasePoolPop(context);
+ 
+ 上面两个函数都是对 AutoreleasePoolPage 的简单封装
+ 
+ */
 
 class AutoreleasePoolPage 
 {

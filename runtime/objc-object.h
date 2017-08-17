@@ -706,6 +706,7 @@ objc_object::rootAutorelease()
 }
 
 
+//对引用计数存储逻辑进行了判断
 inline uintptr_t 
 objc_object::rootRetainCount()
 {
@@ -717,6 +718,7 @@ objc_object::rootRetainCount()
     if (bits.nonpointer) {
         uintptr_t rc = 1 + bits.extra_rc;
         if (bits.has_sidetable_rc) {
+            //TaggedPointer 无法使用时调用 下面方法
             rc += sidetable_getExtraRC_nolock();
         }
         sidetable_unlock();
